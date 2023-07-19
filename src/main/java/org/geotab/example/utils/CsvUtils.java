@@ -32,8 +32,8 @@ public class CsvUtils {
     /**
      * Write vehicle data to CSV files for each vehicle in the provided list.
      *
-     * @param vehicles       List of Device objects representing the vehicles.
-     * @param deviceDataMap  Map with vehicle ID as key and Supplier<List<LogRecord>> as value, providing log records for each vehicle.
+     * @param vehicles List of Device objects representing the vehicles.
+     * @param deviceDataMap Map with vehicle ID as key and Supplier<List<LogRecord>> as value, providing log records for each vehicle.
      */
     public static void writeVehiclesDataToCsv(List<Device> vehicles, Map<String, Supplier<List<LogRecord>>> deviceDataMap) {
         vehicles.forEach(vehicle -> {
@@ -50,9 +50,9 @@ public class CsvUtils {
     /**
      * Write data for a single vehicle to the corresponding CSV file.
      *
-     * @param vehicle        GoDevice object representing the vehicle.
+     * @param vehicle GoDevice object representing the vehicle.
      * @param vehicleDataMap Supplier providing a list of LogRecord objects for the vehicle.
-     * @throws IOException   If an error occurs while writing to the file.
+     * @throws IOException If an error occurs while writing to the file.
      */
     private static void writeVehicleDataToCsv(GoDevice vehicle, Supplier<List<LogRecord>> vehicleDataMap) throws IOException {
         String fileName = Paths.get(CSV_RESULT_PATH, vehicle.getName() + ".csv").toString();
@@ -81,9 +81,9 @@ public class CsvUtils {
     /**
      * Format a CSV row based on the vehicle and the latest log record for that vehicle.
      *
-     * @param vehicle    GoDevice object representing the vehicle.
-     * @param logRecord  LogRecord object representing the latest log record for the vehicle.
-     * @return           A formatted CSV row as a String.
+     * @param vehicle GoDevice object representing the vehicle.
+     * @param logRecord LogRecord object representing the latest log record for the vehicle.
+     * @return A formatted CSV row as a String.
      */
     private static String formatCsvRow(GoDevice vehicle, LogRecord logRecord) {
         double latitude = logRecord.getLatitude();
@@ -96,9 +96,9 @@ public class CsvUtils {
     /**
      * Get the coordinates as a String based on the latitude and longitude values.
      *
-     * @param latitude   Latitude value.
-     * @param longitude  Longitude value.
-     * @return           Coordinates as a formatted String.
+     * @param latitude  Latitude value.
+     * @param longitude Longitude value.
+     * @return Coordinates as a formatted String.
      */
     private static String getCoordinates(double latitude, double longitude) {
         return latitude + "," + longitude;

@@ -18,8 +18,8 @@ public class LoginManager  {
     private final GeotabApi geotabApi;
 
     /**
-     * Constructor for LoginManager class. Reads the Geotab API credentials from the credentials.yml file,
-     * initializes the GeotabApi object with the specified server URL and default timeout, and authenticates the API.
+     * Constructor for LoginManager class. Reads Geotab API credentials from the credentials.yml file,
+     * initializes GeotabApi object with the specified server URL and default timeout, and authenticates the API.
      */
     public LoginManager() {
         Credentials credentials = ConnectionUtils.readCredentialsFromYaml(ConnectionConstants.CREDENTIALS_FILENAME);
@@ -30,12 +30,12 @@ public class LoginManager  {
 
     /**
      * Constructor for LoginManager class with custom credentials, server URL, and timeout values.
-     * Initializes the GeotabApi object with the provided credentials, server URL, and timeout,
+     * Initializes GeotabApi object with the provided credentials, server URL, and timeout,
      * and authenticates the API.
      *
-     * @param credentials The Geotab API credentials.
-     * @param serverUrl   The Geotab API server URL.
-     * @param timeout     The timeout value for API requests.
+     * @param credentials Geotab API credentials.
+     * @param serverUrl Geotab API server URL.
+     * @param timeout timeout value for API requests.
      */
     public LoginManager(Credentials credentials, String serverUrl, int timeout) {
         GeotabApi api = new GeotabApi(credentials, serverUrl, timeout);
@@ -44,9 +44,9 @@ public class LoginManager  {
     }
 
     /**
-     * Get the GeotabApi instance associated with this LoginManager.
+     * Get GeotabApi instance associated with this LoginManager.
      *
-     * @return The GeotabApi instance.
+     * @return GeotabApi instance.
      */
     public GeotabApi getGeotabApi(){
         return this.geotabApi;
