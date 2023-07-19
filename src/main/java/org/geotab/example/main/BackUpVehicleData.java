@@ -51,10 +51,10 @@ public class BackUpVehicleData {
                     break;
                 case 4:
                     // Change execute interval
-                    System.out.print("Enter new execute interval (in seconds): ");
+                    System.out.print("Enter new execute interval (in minutes): ");
                     int newInterval = scanner.nextInt();
                     EXECUTE_INTERVAL_MINUTES = newInterval;
-                    System.out.println("Execute interval changed to: " + newInterval + " seconds");
+                    System.out.println("Execute interval changed to: " + newInterval + " minutes");
                     break;
                 case 5:
                     // Stop the scheduled execution and exit the program
@@ -72,17 +72,13 @@ public class BackUpVehicleData {
         System.out.println("1. Start Scheduled Execution");
         System.out.println("2. Change CSV Data Output Path");
         System.out.println("3. Print YAML File Values");
-        System.out.println("4. Change Execute Interval");
+        System.out.println("4. Change Execute Interval (Minutes)");
         System.out.println("5. Exit");
         System.out.println("====================");
     }
 
     private static void printYamlFileValues(String fileName) {
-        // Implement this method to read and display YAML file values
-        // You can use ConnectionUtils.readCredentialsFromYaml method to get the Credentials object
-        // and then print the database, userName, and password values.
         System.out.println("YAML File Values:");
-        // Example:
         Credentials credentials = ConnectionUtils.readCredentialsFromYaml(fileName);
         System.out.println("Database: " + credentials.getDatabase());
         System.out.println("Username: " + credentials.getUserName());
