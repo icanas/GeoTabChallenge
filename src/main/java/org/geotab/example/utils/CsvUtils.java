@@ -18,7 +18,16 @@ import java.util.function.Supplier;
 public class CsvUtils {
 
     private static final String CSV_HEADER = "ID;timestamp;VIN;Coordinates";
-    private static final String CSV_RESULT_PATH = "data";
+    private static String CSV_RESULT_PATH = "data";
+
+    /**
+     * Set the CSV result path.
+     *
+     * @param newPath The new CSV result path.
+     */
+    public static void setCsvResultPath(String newPath) {
+        CSV_RESULT_PATH = newPath;
+    }
 
     /**
      * Write vehicle data to CSV files for each vehicle in the provided list.
