@@ -61,8 +61,10 @@ public class CsvUtils {
             Files.createDirectories(parentDir);
         }
 
+        boolean fileExists = Files.exists(Paths.get(fileName));
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            if (Files.notExists(Paths.get(fileName))) {
+            if (!fileExists) {
                 writer.write(CSV_HEADER);
                 writer.newLine();
             }
@@ -73,7 +75,6 @@ public class CsvUtils {
                 String csvRow = formatCsvRow(vehicle, vehicleDataMapResult);
                 writer.write(csvRow);
             }
-
         }
     }
 
