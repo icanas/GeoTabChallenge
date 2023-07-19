@@ -42,7 +42,7 @@ public class ConsoleController extends Controller {
     }
 
     /**
-     * Processes vehicle data, retrieves device information, log records, and writes them to CSV files.
+     * Processes vehicle data, retrieves device information, and writes them to CSV files.
      */
     private void processVehicleData() {
         List<Device> devices = deviceService.getAllDevices();
