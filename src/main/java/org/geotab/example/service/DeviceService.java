@@ -2,8 +2,6 @@ package org.geotab.example.service;
 
 import com.geotab.api.Api;
 import com.geotab.api.GeotabApi;
-import com.geotab.http.request.param.GetFeedParameters;
-import com.geotab.model.FeedResult;
 import com.geotab.model.entity.device.Device;
 import com.geotab.model.entity.logrecord.LogRecord;
 import com.geotab.model.entity.statusdata.StatusData;
@@ -14,7 +12,10 @@ import com.geotab.model.search.StatusDataSearch;
 import com.geotab.model.search.TripSearch;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
