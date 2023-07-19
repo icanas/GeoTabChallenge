@@ -3,13 +3,13 @@ package org.geotab.example.service;
 import com.geotab.api.Api;
 import com.geotab.api.GeotabApi;
 import com.geotab.model.entity.device.Device;
+import com.geotab.model.entity.diagnostic.BasicDiagnostic;
+import com.geotab.model.entity.diagnostic.Diagnostic;
+import com.geotab.model.entity.diagnostic.DiagnosticType;
 import com.geotab.model.entity.logrecord.LogRecord;
 import com.geotab.model.entity.statusdata.StatusData;
 import com.geotab.model.entity.trip.Trip;
-import com.geotab.model.search.DeviceSearch;
-import com.geotab.model.search.LogRecordSearch;
-import com.geotab.model.search.StatusDataSearch;
-import com.geotab.model.search.TripSearch;
+import com.geotab.model.search.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -51,10 +51,10 @@ public class DeviceService {
      * @param vehicles The list of Device objects representing the vehicles to fetch LogRecords for.
      * @return A map of device IDs to Suppliers of LogRecords.
      */
-    public Map<String, Supplier<List<LogRecord>>> getDevicesCoordinates(GeotabApi api, List<Device> vehicles){
+    public Map<String, Supplier<List<LogRecord>>> getDevicesCoordinates(List<Device> vehicles){
         LocalDateTime toDate = nowUtcLocalDateTime();
         LocalDateTime fromDate = toDate.minusSeconds(1);
-        Api.MultiCallBuilder call = api.buildMultiCall();
+        Api.MultiCallBuilder call = geotabApi.buildMultiCall();
         Map<String, Supplier<List<LogRecord>>> result = new HashMap<>();
         for (Device v : vehicles) {
             result.put(v.getId().getId(), call.callGet(LogRecordEntity, LogRecordSearch.builder()
@@ -69,12 +69,29 @@ public class DeviceService {
      * IMPORTANT **** DEAD CODE, NOT BEING USED **** ONLY FOR DEMO REASONS **** DELETE
      *
      * @param vehicle The Device object representing the vehicle to fetch trips for.
-     * @return A list of Trip objects representing the trips for the device.
+     * @return A list of Trip objects.
      */
-    public List<Trip> getTripsForDevice(GeotabApi geotabApi, Device vehicle) {
+    public List<Trip> getTripsForDevice(Device vehicle) {
         return geotabApi.callGet(TripEntity,
                 TripSearch.builder().deviceSearch(DeviceSearch.builder()
                         .serialNumber(vehicle.getSerialNumber()).build()).build()).orElse(new ArrayList<>());
+    }
+
+
+    /**
+     * Get a map of device IDs to lists of trips for each device
+     * IMPORTANT **** DEAD CODE, NOT BEING USED **** ONLY FOR DEMO REASONS **** DELETE
+     *
+     * @param vehicles The list of Device objects representing the vehicles to fetch trips for.
+     * @return A map of device IDs to lists of Trip objects.
+     */
+    public Map<String, List<Trip>> getTripMapForVehicles(List<Device> vehicles) {
+        Collectors Collectors = null;
+        return vehicles.stream()
+                .collect(Collectors.toMap(
+                        device -> device.getId().getId(),
+                        this::getTripsForDevice
+                ));
     }
 
     /**
@@ -82,28 +99,25 @@ public class DeviceService {
      * IMPORTANT **** DEAD CODE, NOT BEING USED **** ONLY FOR DEMO REASONS **** DELETE
      *
      * @param vehicle The Device object representing the vehicle to fetch status data for.
-     * @return A list of StatusData objects representing the status data for the device.
+     * @return A list of StatusData objects.
      */
-    public List<StatusData> getStatusData(GeotabApi geotabApi, Device vehicle) {
+    public List<StatusData> getStatusData(Device vehicle) {
         return geotabApi.callGet(StatusDataEntity,
                 StatusDataSearch.builder().deviceSearch(DeviceSearch.builder()
                         .serialNumber(vehicle.getSerialNumber()).build()).fromDate(LocalDateTime.now().minusHours(3)).toDate(LocalDateTime.now()).build()).orElse(new ArrayList<>());
     }
 
     /**
-     * Get a map of device IDs to lists of trips for each device
+     * Get a list of Diagnostic for a specific vehicle
      * IMPORTANT **** DEAD CODE, NOT BEING USED **** ONLY FOR DEMO REASONS **** DELETE
      *
-     * @param vehicles The list of Device objects representing the vehicles to fetch trips for.
-     * @return A map of device IDs to lists of Trip objects representing the trips for each device.
+     * @param vehicle The Device object representing the vehicle to fetch status data for.
+     * @return A list of Diagnostic objects.
      */
-    public Map<String, List<Trip>> getTripMapForVehicles(GeotabApi geotabApi, List<Device> vehicles) {
-        Collectors Collectors = null;
-        return vehicles.stream()
-                .collect(Collectors.toMap(
-                        device -> device.getId().getId(),
-                        vehicle -> getTripsForDevice(geotabApi, vehicle)
-                ));
+    public List<Diagnostic> diagnosticTest(Device vehicle) {
+        return geotabApi.callGet(BasicDiagnosticEntity,
+                DiagnosticSearch.builder().code(vehicle.getProductId()).build()).orElse(new ArrayList<>());
+
     }
 
 
