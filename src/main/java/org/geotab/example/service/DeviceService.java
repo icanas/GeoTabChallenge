@@ -35,7 +35,7 @@ public class DeviceService {
                 DeviceSearch.builder().build()).orElse(new ArrayList<>());
     }
 
-    public Map<String, Supplier<List<LogRecord>>> getDevicesCoordinates(GeotabApi api, List<Device> devices){ //TODO: remove the static everywhere
+    public Map<String, Supplier<List<LogRecord>>> getDevicesCoordinates(GeotabApi api, List<Device> devices){
         LocalDateTime toDate = nowUtcLocalDateTime();
         LocalDateTime fromDate = toDate.minusMinutes(1); //TODO: Fix this time interval
         Api.MultiCallBuilder call = api.buildMultiCall();
