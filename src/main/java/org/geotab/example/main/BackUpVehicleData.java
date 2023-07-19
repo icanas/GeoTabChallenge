@@ -10,6 +10,7 @@ import com.geotab.model.entity.trip.Trip;
 import com.geotab.model.entity.enginetype.EngineType;
 import com.geotab.model.search.DeviceSearch;
 import com.geotab.model.search.LogRecordSearch;
+import org.geotab.example.controller.ConsoleController;
 import org.geotab.example.login.LoginManager;
 
 import java.io.IOException;
@@ -29,6 +30,13 @@ public class BackUpVehicleData {
     private static final String FILE_PATH = "./data"; // TODO: Change and manage paths inside options
 
     public static void main(String[] args) {
+        LoginManager loginManager = new LoginManager();
+        ConsoleController consoleController = new ConsoleController(loginManager);
+        consoleController.execute();
+    }
+
+
+/*    public static void main(String[] args) {
         try {
             LoginManager loginManager = new LoginManager();
             GeotabApi geotabApi = loginManager.getGeotabApi();
@@ -104,5 +112,5 @@ public class BackUpVehicleData {
                 }
             }
         }
-    }
+    }*/
 }

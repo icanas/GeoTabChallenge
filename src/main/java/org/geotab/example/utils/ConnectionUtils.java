@@ -8,12 +8,15 @@ import java.io.InputStream;
 
 public class ConnectionUtils {
 
-    public static Credentials readCredentialsFromYaml(String fileName) throws IOException {
+    public static Credentials readCredentialsFromYaml(String fileName) {
         try (InputStream inputStream = ConnectionUtils.class.getResourceAsStream("/" + fileName)) {
             Yaml yaml = new Yaml();
             CredentialsWrapper wrapper = yaml.loadAs(inputStream, CredentialsWrapper.class);
             return wrapper.getCredentials();
+        } catch (IOException e) {
+            System.out.println("Error while reading from yml file " + e.getMessage());
         }
+        return null;
     }
 
     private static class CredentialsWrapper {

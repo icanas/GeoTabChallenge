@@ -4,7 +4,7 @@ import com.geotab.api.GeotabApi;
 
 public abstract class Controller {
 
-    private final GeotabApi geotabApi;
+    protected final GeotabApi geotabApi;
 
     public Controller(GeotabApi geotabApi) {
         this.geotabApi = geotabApi;

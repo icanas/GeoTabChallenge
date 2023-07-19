@@ -13,7 +13,7 @@ public class LoginManager  {
 
     private final GeotabApi geotabApi;
 
-    public LoginManager() throws IOException {
+    public LoginManager() {
         Credentials credentials = ConnectionUtils.readCredentialsFromYaml(ConnectionConstants.CREDENTIALS_FILENAME);
         GeotabApi api = new GeotabApi(credentials, ConnectionConstants.SERVER_URL, DEFAULT_TIMEOUT);
         api.authenticate();
