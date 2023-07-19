@@ -61,7 +61,7 @@ public class BackUpVehicleData {
     private static void displayMenu() {
         System.out.println("=== Options Menu ===");
         System.out.println("1. Start Scheduled Execution");
-        System.out.println("2. Change CSV Data Output Path");
+        System.out.println("2. Change CSV Data Output Path (default ./data)");
         System.out.println("3. Print YAML File Values");
         System.out.println("4. Change Execute Interval (Minutes)");
         System.out.println("5. Exit");

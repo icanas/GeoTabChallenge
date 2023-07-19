@@ -5,11 +5,9 @@ import com.geotab.model.login.Credentials;
 import org.geotab.example.constants.ConnectionConstants;
 import org.geotab.example.utils.ConnectionUtils;
 
-import java.io.IOException;
-
 import static com.geotab.http.invoker.ServerInvoker.DEFAULT_TIMEOUT;
 
-/*
+/**
  * The LoginManager class is responsible for handling the login process to the Geotab API.
  * It uses the credentials stored in the credentials.yml file to authenticate and establish a connection to the API server.
  */
