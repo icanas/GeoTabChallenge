@@ -3,13 +3,12 @@ package org.geotab.example.service;
 import com.geotab.api.Api;
 import com.geotab.api.GeotabApi;
 import com.geotab.model.entity.device.Device;
-import com.geotab.model.entity.diagnostic.BasicDiagnostic;
-import com.geotab.model.entity.diagnostic.Diagnostic;
-import com.geotab.model.entity.diagnostic.DiagnosticType;
 import com.geotab.model.entity.logrecord.LogRecord;
 import com.geotab.model.entity.statusdata.StatusData;
-import com.geotab.model.entity.trip.Trip;
-import com.geotab.model.search.*;
+import com.geotab.model.search.DeviceSearch;
+import com.geotab.model.search.DiagnosticSearch;
+import com.geotab.model.search.LogRecordSearch;
+import com.geotab.model.search.StatusDataSearch;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,12 +16,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import static com.geotab.api.DataStore.*;
 import static com.geotab.util.DateTimeUtil.nowUtcLocalDateTime;
 
 public class DeviceService {
+
+    private static final String DIAGNOSTIC_ODOMETER_ID = "DiagnosticOdometerId";
 
     private final GeotabApi geotabApi;
 
@@ -65,60 +65,32 @@ public class DeviceService {
     }
 
     /**
-     * Get a list of trips for a specific device.
-     * IMPORTANT **** DEAD CODE, NOT BEING USED **** ONLY FOR DEMO REASONS **** DELETE
+     * Retrieves the odometer data for a list of devices.
+     * This method fetches the latest odometer data for each device in the provided list.
+     * The result is returned as a Map, where the device ID is mapped to its corresponding odometer value.
      *
-     * @param vehicle The Device object representing the vehicle to fetch trips for.
-     * @return A list of Trip objects.
+     * @param vehicles A List of Device for which to retrieve odometer data.
+     * @return A Map with device IDs as keys and their corresponding odometer values as Double.
      */
-    public List<Trip> getTripsForDevice(Device vehicle) {
-        return geotabApi.callGet(TripEntity,
-                TripSearch.builder().deviceSearch(DeviceSearch.builder()
-                        .serialNumber(vehicle.getSerialNumber()).build()).build()).orElse(new ArrayList<>());
+     public Map<String, Double> getDevicesOdometer(List<Device> vehicles) {
+
+        Map<String, Double> result = new HashMap<>();
+
+        vehicles.forEach(
+                v -> {
+                    List<StatusData> statusData = geotabApi.callGet(StatusDataEntity,StatusDataSearch.builder()
+                                    .fromDate(nowUtcLocalDateTime())
+                                    .toDate(nowUtcLocalDateTime().minusSeconds(1))
+                                    .deviceSearch(DeviceSearch.builder().id(v.getId().getId()).build())
+                                    .diagnosticSearch(
+                                            DiagnosticSearch.builder()
+                                                    .id(DIAGNOSTIC_ODOMETER_ID)
+                                                    .name(v.getName())
+                                                    .build()).build())
+                            .orElse(new ArrayList<>());
+                    result.put(v.getId().getId(), statusData.get(0).getData());
+                }
+        );
+        return result;
     }
-
-
-    /**
-     * Get a map of device IDs to lists of trips for each device
-     * IMPORTANT **** DEAD CODE, NOT BEING USED **** ONLY FOR DEMO REASONS **** DELETE
-     *
-     * @param vehicles The list of Device objects representing the vehicles to fetch trips for.
-     * @return A map of device IDs to lists of Trip objects.
-     */
-    public Map<String, List<Trip>> getTripMapForVehicles(List<Device> vehicles) {
-        Collectors Collectors = null;
-        return vehicles.stream()
-                .collect(Collectors.toMap(
-                        device -> device.getId().getId(),
-                        this::getTripsForDevice
-                ));
-    }
-
-    /**
-     * Get a list of status data for a specific device
-     * IMPORTANT **** DEAD CODE, NOT BEING USED **** ONLY FOR DEMO REASONS **** DELETE
-     *
-     * @param vehicle The Device object representing the vehicle to fetch status data for.
-     * @return A list of StatusData objects.
-     */
-    public List<StatusData> getStatusData(Device vehicle) {
-        return geotabApi.callGet(StatusDataEntity,
-                StatusDataSearch.builder().deviceSearch(DeviceSearch.builder()
-                        .serialNumber(vehicle.getSerialNumber()).build()).fromDate(LocalDateTime.now().minusHours(3)).toDate(LocalDateTime.now()).build()).orElse(new ArrayList<>());
-    }
-
-    /**
-     * Get a list of Diagnostic for a specific vehicle
-     * IMPORTANT **** DEAD CODE, NOT BEING USED **** ONLY FOR DEMO REASONS **** DELETE
-     *
-     * @param vehicle The Device object representing the vehicle to fetch status data for.
-     * @return A list of Diagnostic objects.
-     */
-    public List<Diagnostic> diagnosticTest(Device vehicle) {
-        return geotabApi.callGet(BasicDiagnosticEntity,
-                DiagnosticSearch.builder().code(vehicle.getProductId()).build()).orElse(new ArrayList<>());
-
-    }
-
-
 }

@@ -1,10 +1,7 @@
 package org.geotab.example.controller;
 
 import com.geotab.model.entity.device.Device;
-import com.geotab.model.entity.device.GoDevice;
-import com.geotab.model.entity.diagnostic.Diagnostic;
 import com.geotab.model.entity.logrecord.LogRecord;
-import com.geotab.model.entity.statusdata.StatusData;
 import org.geotab.example.login.LoginManager;
 import org.geotab.example.service.DeviceService;
 import org.geotab.example.utils.CsvUtils;
@@ -15,6 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+
 
 /**
  * Controller class responsible for executing scheduled vehicle data processing tasks.
@@ -50,7 +48,8 @@ public class ConsoleController extends Controller {
     private void processVehicleData() {
         List<Device> devices = deviceService.getAllDevices();
         Map<String, Supplier<List<LogRecord>>> deviceDataMap = deviceService.getDevicesCoordinates(devices);
-        CsvUtils.writeVehiclesDataToCsv(devices, deviceDataMap);
+        Map<String, Double> deviceOdometerMap = deviceService.getDevicesOdometer(devices);
+        CsvUtils.writeVehiclesDataToCsv(devices, deviceDataMap, deviceOdometerMap);
     }
 
     /**
