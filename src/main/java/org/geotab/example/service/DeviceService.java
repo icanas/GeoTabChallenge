@@ -53,7 +53,7 @@ public class DeviceService {
      */
     public Map<String, Supplier<List<LogRecord>>> getDevicesCoordinates(List<Device> vehicles){
         LocalDateTime toDate = nowUtcLocalDateTime();
-        LocalDateTime fromDate = toDate.minusSeconds(1);
+        LocalDateTime fromDate = toDate.minusSeconds(5);
         Api.MultiCallBuilder call = geotabApi.buildMultiCall();
         Map<String, Supplier<List<LogRecord>>> result = new HashMap<>();
         for (Device v : vehicles) {
@@ -80,7 +80,7 @@ public class DeviceService {
                 v -> {
                     List<StatusData> statusData = geotabApi.callGet(StatusDataEntity,StatusDataSearch.builder()
                                     .fromDate(nowUtcLocalDateTime())
-                                    .toDate(nowUtcLocalDateTime().minusSeconds(1))
+                                    .toDate(nowUtcLocalDateTime().minusSeconds(5))
                                     .deviceSearch(DeviceSearch.builder().id(v.getId().getId()).build())
                                     .diagnosticSearch(
                                             DiagnosticSearch.builder()
