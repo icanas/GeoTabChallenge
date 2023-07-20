@@ -9,10 +9,10 @@ import java.io.InputStream;
 public class ConnectionUtils {
 
     /**
-     * Reads credentials from a YAML file.
+     * Reads credentials from a YAML file
      *
-     * @param fileName The name of the YAML file to read credentials from.
-     * @return Credentials object containing database, userName, and password.
+     * @param fileName The name of the YAML file to read credentials from
+     * @return Credentials object containing database, userName, and password
      */
     public static Credentials readCredentialsFromYaml(String fileName) {
         try (InputStream inputStream = ConnectionUtils.class.getResourceAsStream("/" + fileName)) {
@@ -26,7 +26,7 @@ public class ConnectionUtils {
     }
 
     /**
-     * Inner class to hold the credentials read from the YAML file.
+     * Inner class to hold the credentials read from the YAML file
      */
     private static class CredentialsWrapper {
         public String database;
@@ -34,9 +34,9 @@ public class ConnectionUtils {
         public String password;
 
         /**
-         * Converts the credentials from the wrapper to Credentials.
+         * Converts the credentials from the wrapper to Credentials
          *
-         * @return Credentials containing database, userName, and password.
+         * @return Credentials containing database, userName, and password
          */
         public Credentials toCredentials() {
             return Credentials.builder()

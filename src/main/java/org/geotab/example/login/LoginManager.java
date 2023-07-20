@@ -8,8 +8,8 @@ import org.geotab.example.utils.ConnectionUtils;
 import static com.geotab.http.invoker.ServerInvoker.DEFAULT_TIMEOUT;
 
 /**
- * The LoginManager class is responsible for handling the login process to the Geotab API.
- * It uses the credentials stored in the credentials.yml file to authenticate and establish a connection to the API server.
+ * The LoginManager class is responsible for handling the login process to the Geotab API
+ * It uses the credentials stored in the credentials.yml file to authenticate and establish a connection to the API server
  */
 public class LoginManager  {
 
@@ -27,9 +27,9 @@ public class LoginManager  {
     }
 
     /**
-     * Constructor for LoginManager class with custom credentials, server URL, and timeout values.
+     * Constructor for LoginManager class with custom credentials, server URL, and timeout values
      * Initializes GeotabApi object with the provided credentials, server URL, and timeout,
-     * and authenticates the API.
+     * and authenticates the API
      *
      * @param credentials Geotab API credentials.
      * @param serverUrl Geotab API server URL.
@@ -42,9 +42,9 @@ public class LoginManager  {
     }
 
     /**
-     * Get GeotabApi instance associated with this LoginManager.
+     * Get GeotabApi instance associated with this LoginManager
      *
-     * @return GeotabApi instance.
+     * @return GeotabApi instance
      */
     public GeotabApi getGeotabApi(){
         return this.geotabApi;

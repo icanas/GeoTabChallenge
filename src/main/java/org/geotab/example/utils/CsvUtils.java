@@ -21,20 +21,20 @@ public class CsvUtils {
     private static String CSV_RESULT_PATH = "data";
 
     /**
-     * Set the CSV result path.
+     * Set the CSV result path
      *
-     * @param newPath The new CSV result path.
+     * @param newPath The new CSV result path
      */
     public static void setCsvResultPath(String newPath) {
         CSV_RESULT_PATH = newPath;
     }
 
     /**
-     * Write vehicle data to CSV files for each vehicle in the provided list.
+     * Write vehicle data to CSV files for each vehicle in the provided list
      *
-     * @param vehicles List of Device objects representing the vehicles.
-     * @param deviceDataMap Map with vehicle ID as key and Supplier<List<LogRecord>> as value, providing log records for each vehicle.
-     * @param deviceOdometerMap Map with vehicle ID as key and odometer value in meters as value.
+     * @param vehicles List of Device objects representing the vehicles
+     * @param deviceDataMap Map with vehicle ID as key and Supplier<List<LogRecord>> as value, providing log records for each vehicle
+     * @param deviceOdometerMap Map with vehicle ID as key and odometer value in meters as value
      */
     public static void writeVehiclesDataToCsv(List<Device> vehicles, Map<String, Supplier<List<LogRecord>>> deviceDataMap, Map<String, Double> deviceOdometerMap) {
         vehicles.forEach(vehicle -> {
@@ -49,12 +49,12 @@ public class CsvUtils {
     }
 
     /**
-     * Write data for a single vehicle to the corresponding CSV file.
+     * Write data for a single vehicle to the corresponding CSV file
      *
-     * @param vehicle GoDevice object representing the vehicle.
-     * @param vehicleDataMap Supplier providing a list of LogRecord objects for the vehicle.
-     * @param deviceOdometerMap Map with vehicle ID as key and odometer value in meters as value.
-     * @throws IOException If an error occurs while writing to the file.
+     * @param vehicle GoDevice object representing the vehicle
+     * @param vehicleDataMap Supplier providing a list of LogRecord objects for the vehicle
+     * @param deviceOdometerMap Map with vehicle ID as key and odometer value in meters as value
+     * @throws IOException If an error occurs while writing to the file
      */
     private static void writeVehicleDataToCsv(GoDevice vehicle, Supplier<List<LogRecord>> vehicleDataMap, Map<String, Double> deviceOdometerMap) throws IOException {
         String fileName = Paths.get(CSV_RESULT_PATH, vehicle.getName() + ".csv").toString();
@@ -81,12 +81,12 @@ public class CsvUtils {
     }
 
     /**
-     * Format a CSV row based on the vehicle and the latest log record for that vehicle.
+     * Format a CSV row based on the vehicle and the latest log record for that vehicle
      *
-     * @param vehicle GoDevice object representing the vehicle.
-     * @param logRecord LogRecord object representing the latest log record for the vehicle.
-     * @param odometer Odometer value in meters for the vehicle.
-     * @return A formatted CSV row as a String.
+     * @param vehicle GoDevice object representing the vehicle
+     * @param logRecord LogRecord object representing the latest log record for the vehicle
+     * @param odometer Odometer value in meters for the vehicle
+     * @return A formatted CSV row as a String
      */
     private static String formatCsvRow(GoDevice vehicle, LogRecord logRecord, double odometer) {
         double latitude = logRecord.getLatitude();
@@ -98,11 +98,11 @@ public class CsvUtils {
     }
 
     /**
-     * Get the coordinates as a String based on the latitude and longitude values.
+     * Get the coordinates as a String based on the latitude and longitude values
      *
-     * @param latitude  Latitude value.
-     * @param longitude Longitude value.
-     * @return Coordinates as a formatted String.
+     * @param latitude  Latitude value
+     * @param longitude Longitude value
+     * @return Coordinates as a formatted String
      */
     private static String getCoordinates(double latitude, double longitude) {
         return latitude + "," + longitude;

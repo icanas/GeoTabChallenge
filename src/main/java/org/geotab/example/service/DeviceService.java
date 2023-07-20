@@ -27,18 +27,18 @@ public class DeviceService {
     private final GeotabApi geotabApi;
 
     /**
-     * Constructs a DeviceService object with the provided GeotabApi instance.
+     * Constructs a DeviceService object with the provided GeotabApi instance
      *
-     * @param geotabApi The GeotabApi instance to be used for API calls.
+     * @param geotabApi The GeotabApi instance to be used for API calls
      */
     public DeviceService(GeotabApi geotabApi) {
         this.geotabApi = geotabApi;
     }
 
     /**
-     * Get a list of all devices.
+     * Get a list of all devices
      *
-     * @return A list of Device objects representing all devices.
+     * @return A list of Device objects representing all devices
      */
     public List<Device> getAllDevices(){
         return geotabApi.callGet(DeviceEntity,
@@ -46,10 +46,10 @@ public class DeviceService {
     }
 
     /**
-     * Get a map of device IDs to Suppliers that provide a list of LogRecords for each device.
+     * Get a map of device IDs to Suppliers that provide a list of LogRecords for each device
      *
-     * @param vehicles The list of Device objects representing the vehicles to fetch LogRecords for.
-     * @return A map of device IDs to Suppliers of LogRecords.
+     * @param vehicles The list of Device objects representing the vehicles to fetch LogRecords for
+     * @return A map of device IDs to Suppliers of LogRecords
      */
     public Map<String, Supplier<List<LogRecord>>> getDevicesCoordinates(List<Device> vehicles){
         LocalDateTime toDate = nowUtcLocalDateTime();
@@ -65,12 +65,12 @@ public class DeviceService {
     }
 
     /**
-     * Retrieves the odometer data for a list of devices.
-     * This method fetches the latest odometer data for each device in the provided list.
-     * The result is returned as a Map, where the device ID is mapped to its corresponding odometer value.
+     * Retrieves the odometer data for a list of devices
+     * This method fetches the latest odometer data for each device in the provided list
+     * The result is returned as a Map, where the device ID is mapped to its corresponding odometer value
      *
-     * @param vehicles A List of Device for which to retrieve odometer data.
-     * @return A Map with device IDs as keys and their corresponding odometer values as Double.
+     * @param vehicles A List of Device for which to retrieve odometer data
+     * @return A Map with device IDs as keys and their corresponding odometer values as Double
      */
      public Map<String, Double> getDevicesOdometer(List<Device> vehicles) {
 
